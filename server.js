@@ -43,7 +43,20 @@ app.set("views", path.join(_dirname, 'views'));
 
 import mongoose from 'mongoose';
 mongoose.set("strictQuery", false);
-mongoose.connect(process.env.DBURI);
+
+const connectDB = async () => {
+    try {
+        await mongoose.connect(process.env.DBURI, {
+            serverSelectionTimeoutMS: 5000,
+            socketTimeoutMS: 45000,
+        });
+        console.log('MongoDB connected successfully');
+    } catch (error) {
+        console.error('MongoDB connection error:', error);
+    }
+};
+
+connectDB();
 
 app.use(session({
     secret: process.env.SESSION_SECRET || crypto.randomBytes(20).toString('hex'),
