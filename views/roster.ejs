@@ -6,14 +6,79 @@
     <title>TJ Policy Debate</title>
     <link rel="stylesheet" href="/universal.css">
     <link rel="stylesheet" href="/basic.css">
+    <link rel="stylesheet" href="/roster.css">
     <link rel="icon" type="image/x-icon" href="/logo.svg">
 </head>
 <body>
     <%- include('partials/header') %>
     
     <main class="page-container">
-        <h1 id="pageTitle">Page title</h1>
-        <p id="pageContent">This is some page content</p>
+        <h1 id="pageTitle">Team roster</h1>
+        <div id="rosterInsert">
+            <% let hasMembers = false; %>
+            <% [12, 11, 10, 9].forEach(function(grade) { %>
+                <% if (usersByGrade[grade] && usersByGrade[grade].length > 0) { %>
+                    <% hasMembers = true; %>
+                    <% usersByGrade[grade].forEach(function(member) { %>
+                        <div class="user">
+                            <div class="userRightContent">
+                                <div class="leftContactWrapper">
+                                    <p class="memberName"><%= member.name %></p>
+                                    <p class="memberGrade"><%=member.role.type.charAt(0).toUpperCase() + member.role.type.slice(1);%>
+                                    <% if (member.role.grade == 9) { %>
+                                        Freshman
+                                    <% } else if (member.role.grade == 10) { %>
+                                        Sophomore
+                                    <% } else if (member.role.grade == 11) { %>
+                                        Junior
+                                    <% } else if (member.role.grade == 12) { %>
+                                        Senior
+                                    <% } else { %>
+                                        Member
+                                    <% } %>
+                                </div>
+                                <div class="rightActions">
+                                    <% if (member.role.type != 'varsity') { %>
+                                        <a href="/promote/<%=member.username%>" class="rightButton">Promote</a>
+                                    <% } %>
+                                    <% if (member.role.type != 'novice') { %>
+                                        <a href="/demote/<%=member.username%>" class="rightButton">Demote</a>
+                                    <% } %>
+                                    <a href="/kick/<%=member.username%>" class="rightButton">Kick</a>
+                                    <a href="/fine/<%=member.username%>" class="rightButton">Fine</a>
+                                </div>
+                            </div>
+                        </div>
+                    <% }) %>
+                <% } %>
+            <% }) %>
+            
+            <% if (usersByGrade.other && usersByGrade.other.length > 0) { %>
+                <% hasMembers = true; %>
+                <% usersByGrade.other.forEach(function(member) { %>
+                    <div class="user">
+                        <div class="recentLectureRightContent">
+                            <p class="memberName"><%= member.name %></p>
+                            <p class="memberGrade"><%= member.role?.grade || 'N/A' %></p>
+                            <div class="rightActions">
+                                <% if (member.role.type != 'varsity') { %>
+                                    <button class="rightButton">Promote</button>
+                                <% } %>
+                                <% if (member.role.type != 'novice') { %>
+                                    <button class="rightButton">Demote</button>
+                                <% } %>
+                                <button class="rightButton">Kick</button>
+                                <button class="rightButton">Fine</button>
+                            </div>
+                        </div>
+                    </div>
+                <% }) %>
+            <% } %>
+            
+            <% if (!hasMembers) { %>
+                <p id="noLectures">No members</p>
+            <% } %>
+        </div>
     </main>
     
     <%- include('partials/footer') %>

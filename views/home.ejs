@@ -23,34 +23,43 @@
             <div id="leftContent">
     
                 <div id="feeBlock">
-                    <p id="outstandingFees">$15.00</p>
+                    <p id="outstandingFees">$<%=outstandingFees%></p>
                     <p id="outstandingFeeTitle">Outstanding fees</p>
+                    <% if (hasOutstandingFees) { %>
+
+                        <a href="/seeMyFees">See all</a>
+
+                    <% } %>
                 </div>
                 
                 <div id="recentLectures">
+
                     <p id="recentLecturesTitle">Recent lectures</p>
+
                     <div id="lectureInsert">
-                        <a href="#" class="recentLecture">
-                            <img src="/slides.png" alt="Google slides icon" class="slideImage">
-                            <div class="recentLectureRightContent">
-                                <p class="recentLectureLabel">Topicality</p>
-                                <p class="recentLectureDate">4/8/25</p>
-                            </div>
-                        </a>
-                        <a class="recentLecture">
-                            <img src="/slides.png" alt="Google slides icon" class="slideImage">
-                            <div class="recentLectureRightContent">
-                                <p class="recentLectureLabel">Topicality</p>
-                                <p class="recentLectureDate">4/8/25</p>
-                            </div>
-                        </a>
-                        <a class="recentLecture">
-                            <img src="/slides.png" alt="Google slides icon" class="slideImage">
-                            <div class="recentLectureRightContent">
-                                <p class="recentLectureLabel">Topicality</p>
-                                <p class="recentLectureDate">4/8/25</p>
-                            </div>
-                        </a>
+                        <% if (lectures && lectures.length > 0) { %>
+                            <% lectures.slice(0, 3).forEach(function(lecture) { %>
+                                <a href="<%=lecture.url %>" class="recentLecture">
+                                    <img src="/slides.png" alt="Google slides icon" class="slideImage">
+                                    <div class="recentLectureRightContent">
+                                        <p class="recentLectureLabel"><%=lecture.title%></p>
+                                        <p class="recentLectureDate">
+
+                                            <% 
+                                            const date = new Date(lecture.datePosted);
+                                            const formatted = (date.getMonth() + 1).toString().padStart(2, '0') + '/' + 
+                                                            date.getDate().toString().padStart(2, '0') + '/' + 
+                                                            date.getFullYear();
+                                            %>
+                                            <%= formatted %>
+
+                                        </p>
+                                    </div>
+                                </a>
+                            <% }) %>
+                        <% } else { %>
+                            <p id="noLectures">No recent lectures</p>
+                        <% } %>
                     </div>
                 </div>
             </div>
@@ -63,26 +72,16 @@
     
                     <div id="tournamentInsert">
     
-                        <div class="tournament">
-    
-                            <p class="tournamentName">WACFL #5</p>
-                            <button class="signUpForTournament">Register</button>
-    
-                        </div>
-    
-                        <div class="tournament">
-    
-                            <p class="tournamentName">Metrofinals</p>
-                            <button class="signUpForTournament">Register</button>
-    
-                        </div>
-    
-                        <div class="tournament">
-    
-                            <p class="tournamentName">VHSL</p>
-                            <button class="signUpForTournament">Register</button>
-    
-                        </div>
+                        <% if (tournaments && tournaments.length > 0) { %>
+                            <% tournaments.slice(0, 3).forEach(function(tournament) { %>
+                                <a href="/tournament/<%= tournament._id %>" class="tournament">
+                                    <p class="tournamentName"><%= tournament.name %></p>
+                                    <button class="signUpForTournament">Register</button>
+                                </a>
+                            <% }) %>
+                        <% } else { %>
+                            <p id="noUpcoming">No upcoming tournaments</p>
+                        <% } %>
     
                     </div>
     
@@ -92,43 +91,46 @@
 
                 <div id="bottomLinks">
 
-                    <div class="rightContentBlock">
-                        <p class="rightContentTitle">Finances</p>
-                        <button class="visitContent">Go</button>
-                    </div>
-    
-                    <div class="rightContentBlock">
-                        <p class="rightContentTitle">Tournament portal</p>
-                        <button class="visitContent">Go</button>
-                    </div>
+                   <% if (user.role && user.role.officer) { %>
+                        
+                        <div class="rightContentBlock">
+                            <p class="rightContentTitle">Finances</p>
+                            <a href='/finances' aria-label="Finances" class="visitContent">Go</a>
+                        </div>
+        
+                        <div class="rightContentBlock">
+                            <p class="rightContentTitle">Tournament portal</p>
+                            <a href='/tournamentPortal' class="visitContent">Go</a>
+                        </div>
 
-                    <div class="rightContentBlock">
-                        <p class="rightContentTitle">Post lecture</p>
-                        <button class="visitContent">Go</button>
-                    </div>
+                        <div class="rightContentBlock">
+                            <p class="rightContentTitle">Post lecture</p>
+                            <a href='/postLecture' class="visitContent">Go</a>
+                        </div>
+
+                        <div class="rightContentBlock">
+                            <p class="rightContentTitle">Team roster</p>
+                            <a href='/roster' class="visitContent">Go</a>
+                        </div>
+            
+                        <div class="rightContentBlock">
+                            <p class="rightContentTitle">Judge registry</p>
+                            <a href='/judgeRegistry' class="visitContent">Go</a>
+                        </div>
+                    
+                    <% } %>
 
                     <div class="rightContentBlock">
                         <p class="rightContentTitle">Dropbox</p>
-                        <button class="visitContent">Go</button>
+                        <a href='https://www.dropbox.com/home/2025-26%20TJPD' class="visitContent">Go</a>
                     </div>
         
                     <div class="rightContentBlock">
                         <p class="rightContentTitle">Constitution</p>
-                        <button class="visitContent">Go</button>
+                        <a href='/constitution' class="visitContent">Go</a>
                     </div>
         
-                    <div class="rightContentBlock">
-                        <p class="rightContentTitle">Team roster</p>
-                        <button class="visitContent">Go</button>
-                    </div>
-        
-                    <div class="rightContentBlock">
-                        <p class="rightContentTitle">Judge registry</p>
-                        <button class="visitContent">Go</button>
-                    </div>
-    
                 </div>
-    
     
             </div>
 
@@ -162,10 +164,6 @@
                 if (document.querySelector('header').classList.contains('header-light')) {
 
                     document.getElementsByClassName('topName')[0].style.setProperty('color', 'rgb(51, 51, 51)', 'important');
-
-                }
-
-                for (let x = 0; x < <%=user%>.tournaments.length; ) {
 
                 }
 

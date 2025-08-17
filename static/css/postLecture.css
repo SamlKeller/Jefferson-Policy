@@ -1,0 +1,61 @@
+#topLectureSlot {
+    width: 100%;
+    border-radius: 8px;
+    border: 1px solid rgb(206, 206, 206);
+    outline: none;
+    height: 45px;
+    padding-left: 8px;
+}
+
+#dateSlot {
+    margin-top: 12px;
+    height: 45px;
+    border-radius: 8px;
+    border: 1px solid rgb(206, 206, 206);
+    outline: none;
+    width: 150px;
+}
+
+#pageLabel {
+    color: rgb(128, 128, 128);
+}
+
+#protectedBox {
+    margin-top: 12px;
+}
+
+#postLectureForm {
+    margin-top: 0px !important;
+}
+
+#submitButton {
+    border-radius: 8px;
+    background-color: #274690;
+    border: none;
+    outline: none;
+    width: 250px;
+    height: 45px;
+    color: white;
+    font-size: 14px;
+}
+
+#dateSlotLabel {
+    margin-top: 24px;
+    margin-bottom: 0px;
+}
+
+#dateSlot {
+    margin-top: 12px;
+    border-radius: 0px 9px 9px 0px;
+}
+
+#midLectureSlot {
+    margin-top: 12px;
+    border-radius: 9px 0px 0px 9px;
+}
+
+label[for="protectedBox"] {
+    position: relative;
+    top: 6px;
+    left: 4px;
+}

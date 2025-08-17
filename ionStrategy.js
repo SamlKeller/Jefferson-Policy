@@ -4,12 +4,6 @@ import axios from 'axios';
 
 const ION_BASE_URL = 'https://ion.tjhsst.edu';
 
-console.log('[Ion Strategy] Initializing with:', {
-    clientID: process.env.OAUTHCLIENTID ? 'Set' : 'Missing',
-    clientSecret: process.env.OAUTHCLIENTSECRET ? 'Set' : 'Missing',
-    callbackURL: process.env.ION_REDIRECT_URI
-});
-
 const IonStrategy = new OAuth2Strategy({
     authorizationURL: `${ION_BASE_URL}/oauth/authorize`,
     tokenURL: `${ION_BASE_URL}/oauth/token/`,
@@ -19,7 +13,6 @@ const IonStrategy = new OAuth2Strategy({
     scope: ['read'],
     state: true
 }, async (accessToken, refreshToken, params, profile, done) => {
-    console.log('[Ion Strategy] Got tokens, fetching profile...');
     
     try {
         const response = await axios.get(`${ION_BASE_URL}/api/profile`, {
@@ -29,7 +22,6 @@ const IonStrategy = new OAuth2Strategy({
         });
         
         const ionProfile = response.data;
-        console.log('[Ion Strategy] Profile received:', ionProfile.ion_username);
         
         const user = {
             username: ionProfile.ion_username,
@@ -44,8 +36,8 @@ const IonStrategy = new OAuth2Strategy({
             refreshToken: refreshToken
         };
         
-        console.log('[Ion Strategy] Returning user object');
         return done(null, user);
+        
     } catch (error) {
         console.error('[Ion Strategy] Error fetching profile:', error.message);
         if (error.response) {

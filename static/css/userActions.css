@@ -1,0 +1,11 @@
+#submitDemotion {
+    margin-top: 18px;
+    background-color: rgb(44, 62, 80);
+    border: none;
+    outline: none;
+    padding: 6px;
+    width: 175px;
+    height: 36px;
+    color: white;
+    border-radius: 8px;
+}

@@ -57,19 +57,20 @@ class Utils {
         next();
     }
 
-    static ensureLogin(req, res, next) {
+    static ensureOfficer (req, res, next) {
         
         if (req.isAuthenticated()) {
         
             if (req.user.role.officer) {
                 next();
+            } else {
+                return res.redirect('/');
             }
 
+
+        } else {
             return res.redirect('/');
-
         }
-
-        return res.redirect('/');
 
     }
 

@@ -2,29 +2,25 @@ import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
 const lectureSchema = new Schema({
-    title: {
-        type: String,
-        required: true
-    },
-    date: {
+    name: {
         type: Date,
         required: true
     },
     datePosted: {
         type: Date,
-        required: false,
-        default: "/defaultPic.svg"
+        required: true,
+        default: Date.now
     },
-    poster: {
-        type: String,
+    tournaments: {
+        type: Array,
         required: true
     },
-    url: {
-        type: String,
+    contactInfo: {
+        type: Object,
         required: true
     },
-    isProtected: {
-        type: Boolean,
+    notes: {
+        type: String,
         required: true
     }
 });

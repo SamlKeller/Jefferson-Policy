@@ -6,14 +6,20 @@
     <title>TJ Policy Debate</title>
     <link rel="stylesheet" href="/universal.css">
     <link rel="stylesheet" href="/basic.css">
+    <link rel="stylesheet" href="/userActions.css">
     <link rel="icon" type="image/x-icon" href="/logo.svg">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
 </head>
 <body>
     <%- include('partials/header') %>
     
     <main class="page-container">
-        <h1 id="pageTitle">Policy Debate Constitution</h1>
-        Coming soon...
+        <form action="/promote" method="POST">
+            <h1 id="pageTitle">Promote member <%=username%></h1>
+            <p id="pageContent">Promote member <%=username%> from <%=currentRole%> to <%=newRole%>?</p>
+            <input type="text" name="username" placeholder="Type username to confirm" class="form-control">
+            <button type="submit" id="submitDemotion">Promote member</button>
+        </form>
     </main>
     
     <%- include('partials/footer') %>

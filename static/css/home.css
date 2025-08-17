@@ -1,3 +1,19 @@
+@media only screen and (max-width: 865px) {
+
+    #contentWrapper {
+        flex-direction: column !important;
+    }
+
+    #leftContent {
+        width: 100% !important;
+    }
+
+    #feeBlock {
+        width: 100% !important;
+    }
+    
+}
+
 .page-container {
     margin-top: 72px !important;
     width: 100%;
@@ -179,15 +195,27 @@
     margin: auto auto auto 0px;
 }
 
+#noUpcoming {
+    text-align: center;
+    margin: 12px auto auto auto;
+}
+
+#noLectures {
+    margin: 12px auto auto auto;
+    text-align: center;
+}
+
 .visitContent {
+    text-decoration: none;
     display: block;
     background-color: #274690;
     height: 100%;
     margin: auto 0px auto auto;
     color: white;
     width: 75px;
-    height: 40px;
+    line-height: 40px;
     border: none;
     outline: none;
     border-radius: 8px;
+    text-align: center;
 }

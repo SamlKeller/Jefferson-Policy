@@ -6,14 +6,30 @@
     <title>TJ Policy Debate</title>
     <link rel="stylesheet" href="/universal.css">
     <link rel="stylesheet" href="/basic.css">
+    <link rel="stylesheet" href="/postLecture.css">
     <link rel="icon" type="image/x-icon" href="/logo.svg">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
 </head>
 <body>
     <%- include('partials/header') %>
     
     <main class="page-container">
-        <h1 id="pageTitle">Policy Debate Constitution</h1>
-        Coming soon...
+        <h1 id="pageTitle">Post lecture</h1>
+        <p id="pageLabel">Give the title, URL, and date the lecture was given.</p>
+        <form id="postLectureForm" action="/postLecture" method="POST">
+
+            <div class="input-group mb-3">
+                <input type="text" name="title" placeholder="Title" id="topLectureSlot" class="form-control">
+                <input type="text" name="url" placeholder="Lecture URL" id="midLectureSlot" class="form-control">
+                <input type="date" name="date" id="dateSlot" class="form-control">
+            </div>
+
+            <input type="checkbox" name="protected" id="protectedBox" class="form-check-input">
+            <label for="protectedBox">Require login to access lecture?</label>
+            <br><br>
+            <button id="submitButton" type="submit">Post lecture</button>
+
+        </form>
     </main>
     
     <%- include('partials/footer') %>

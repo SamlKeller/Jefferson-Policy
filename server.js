@@ -106,41 +106,25 @@ function checkFileType(file, cb) {
     }
 }
 
-// Passport Configuration
 passport.use(IonStrategy);
 
 passport.serializeUser(function (user, done) {
-    console.log('[Serialize User]', user.username || user._doc?.username);
     done(null, user.username || user._doc?.username);
 });
 
 passport.deserializeUser(async function (username, done) {
-    console.log('[Deserialize User]', username);
     try {
         const user = await User.findOne({ username: username });
-        if (user) {
-            console.log('[Deserialize Success]', user.username);
-        } else {
-            console.log('[Deserialize Failed] User not found:', username);
-        }
         done(null, user);
     } catch (err) {
-        console.log("[Deserialize Error]", err);
         done(err, null);
     }
 });
 
-// Debug Middleware - MUST BE BEFORE ROUTES
 app.use((req, res, next) => {
-    console.log(`[${new Date().toISOString()}] ${req.method} ${req.path}`, {
-        authenticated: req.isAuthenticated(),
-        user: req.user ? req.user.username : 'none',
-        sessionID: req.sessionID
-    });
     next();
 });
 
-// Routes
 app.get('/', Utils.ensureNotLogin, async (req, res) => {
 
     res.render('index', {
@@ -150,21 +134,19 @@ app.get('/', Utils.ensureNotLogin, async (req, res) => {
 });
 
 app.get('/auth/ion', (req, res, next) => {
-    console.log('[Ion Auth] Starting authentication');
     passport.authenticate('ion')(req, res, next);
 });
 
 app.get('/auth/ion/callback', 
     (req, res, next) => {
-        console.log('[Ion Callback] Received callback with code:', req.query.code ? 'present' : 'missing');
         
         passport.authenticate('ion', { 
             failureRedirect: '/login?error=ion_auth_failed',
             failureFlash: true 
         })(req, res, next);
+
     },
     async (req, res) => {
-        console.log('[Ion Callback] Authentication successful, user:', req.user);
         
         try {
 
@@ -178,7 +160,7 @@ app.get('/auth/ion/callback',
             });
             
             if (!user) {
-                console.log('[Ion Callback] Creating new user:', req.user.username);
+
                 const now = Date.now();
                 
                 user = new User({
@@ -200,9 +182,7 @@ app.get('/auth/ion/callback',
                 });
                 
                 await user.save();
-                console.log('[Ion Callback] New user saved:', user.username);
                 
-                // Try to send welcome email
                 try {
                     if (EmailService && EmailService.sendWelcomeEmail) {
                         await EmailService.sendWelcomeEmail(
@@ -210,20 +190,22 @@ app.get('/auth/ion/callback',
                             user.name,
                             { grade: req.user.grade }
                         );
-                        console.log('[Ion Callback] Welcome email sent');
                     }
                 } catch (error) {
                     console.error('[Ion Callback] Failed to send welcome email:', error.message);
                 }
 
             } else {
-                console.log('[Ion Callback] Updating existing user:', user.username);
+
                 user.lastLogin = Date.now();
+
                 if (req.user.grade) {
                     user.settings = user.settings || {};
                     user.settings.grade = req.user.grade;
                 }
+
                 await user.save();
+
             }
             
             req.session.ionTokens = {
@@ -231,16 +213,13 @@ app.get('/auth/ion/callback',
                 refreshToken: req.user.refreshToken
             };
             
-            console.log('[Ion Callback] Logging in user:', user.username);
             
             req.logIn(user, (err) => {
                 if (err) {
                     console.error('[Ion Callback] Login error:', err);
                     return res.redirect('/login?error=login_failed');
                 }
-                
-                console.log('[Ion Callback] Login successful:', user.username);
-                
+                                
                 req.session.save((err) => {
                     if (err) {
                         console.error('[Ion Callback] Session save error:', err);
@@ -248,8 +227,9 @@ app.get('/auth/ion/callback',
                     
                     const returnTo = req.session.returnTo || '/home';
                     delete req.session.returnTo;
-                    console.log('[Ion Callback] Redirecting to:', returnTo);
+
                     res.redirect(returnTo);
+
                 });
             });
             
@@ -259,6 +239,42 @@ app.get('/auth/ion/callback',
         }
     }
 );
+
+function onOffToBool(str) {
+    if (typeof str !== "string") return false;
+    return str.toLowerCase() === "on";
+}
+
+app.post('/postLecture', Utils.ensureOfficer, (req, res) => {
+
+    if (!req.body.title || !req.body.date || !req.body.url || !req.body.protected) {
+
+        return res.redirect('/postLecture');
+
+    }
+
+    let url = req.body.url;
+
+    if (!req.body.url.toLowerCase().includes('http')) {
+
+        url = 'https://' + req.body.url;
+
+    }
+
+    const lecture = new Lecture({
+        title: req.body.title,
+        date: req.body.date,
+        datePosted: new Date(),
+        poster: req.user.username,
+        url: url,
+        isProtected: onOffToBool(req.body.protected)
+    });
+
+    lecture.save();
+
+    return res.redirect('/');
+
+});
 
 app.get('/login', Utils.ensureNotLogin, (req, res) => {
     res.render('login', {
@@ -279,7 +295,6 @@ app.get('/logout', (req, res, next) => {
             console.error('[Logout] Error:', err);
             return next(err);
         }
-        console.log('[Logout] User logged out:', username);
         res.redirect('/');
     });
 });
@@ -444,6 +459,12 @@ app.get('/officers', (req, res) => {
     });
 });
 
+app.get('/feeSummary', Utils.ensureOfficer, (req, res) => {
+    res.render('feePortal', {
+        user: req.user || null
+    });
+});
+
 app.get('/contact', (req, res) => {
     res.render('contact', {
         user: req.user || null
@@ -468,10 +489,143 @@ app.get('/calendar', (req, res) => {
     });
 });
 
-app.get('/home', Utils.ensureLogin, (req, res) => {
+async function getAllLectures() {
+    try {
+        const lectures = await Lecture.find({})
+            .sort({ date: -1 })
+            .lean();
+        
+        return lectures;
+    } catch (error) {
+        console.error('Error fetching all lectures:', error);
+        return [];
+    }
+}
+
+async function getRecentLectures(limit = 3) {
+    try {
+        const lectures = await Lecture.find({})
+            .sort({ date: -1 })
+            .limit(limit)
+            .lean();
+        
+        return lectures;
+    } catch (error) {
+        console.error('Error fetching recent lectures:', error);
+        return [];
+    }
+}
+
+async function getPublicLectures() {
+    try {
+        const lectures = await Lecture.find({ isProtected: false })
+            .sort({ date: -1 })
+            .lean();
+        
+        return lectures;
+    } catch (error) {
+        console.error('Error fetching public lectures:', error);
+        return [];
+    }
+}
+
+async function getLecturesByPoster(posterUsername) {
+    try {
+        const lectures = await Lecture.find({ poster: posterUsername })
+            .sort({ date: -1 })
+            .lean();
+        
+        return lectures;
+    } catch (error) {
+        console.error('Error fetching lectures by poster:', error);
+        return [];
+    }
+}
+
+async function getLecturesByDateRange(startDate, endDate) {
+    try {
+        const lectures = await Lecture.find({
+            date: {
+                $gte: startDate,
+                $lte: endDate
+            }
+        })
+        .sort({ date: -1 })
+        .lean();
+        
+        return lectures;
+    } catch (error) {
+        console.error('Error fetching lectures by date range:', error);
+        return [];
+    }
+}
+
+async function getPaginatedLectures(page = 1, limit = 10, filters = {}) {
+    try {
+        const query = {};
+        
+        if (filters.isProtected !== undefined) {
+            query.isProtected = filters.isProtected;
+        }
+        
+        if (filters.poster) {
+            query.poster = filters.poster;
+        }
+        
+        if (filters.startDate || filters.endDate) {
+            query.date = {};
+            if (filters.startDate) query.date.$gte = filters.startDate;
+            if (filters.endDate) query.date.$lte = filters.endDate;
+        }
+        
+        const lectures = await Lecture.find(query)
+            .sort({ date: -1 })
+            .limit(limit)
+            .skip((page - 1) * limit)
+            .lean();
+        
+        const total = await Lecture.countDocuments(query);
+        
+        return {
+            lectures,
+            totalPages: Math.ceil(total / limit),
+            currentPage: page,
+            total
+        };
+    } catch (error) {
+        console.error('Error fetching paginated lectures:', error);
+        return {
+            lectures: [],
+            totalPages: 0,
+            currentPage: 1,
+            total: 0
+        };
+    }
+}
+
+app.get('/home', Utils.ensureLogin, async (req, res) => {
+
+    const tourneys = await getOpenTournaments();
+    const lectures = await getRecentLectures();
+
+    let hasFees = false;
+    let feeTotal = 0;
+
+    for (let x = 0; x < req.user.fees.length; x++) {
+
+        if (!req.user.fees[x].paid) {
+            hasFees = true;
+            feeTotal += req.user.fees[x].amount;
+        }
+
+    }
 
     res.render('home', {
-        user: req.user
+        user: req.user,
+        tournaments: tourneys,
+        hasOutstandingFees: hasFees,
+        outstandingFees: feeTotal,
+        lectures: lectures
     });
 
 });
@@ -486,8 +640,6 @@ app.get('/tournaments', Utils.ensureOfficer, (req, res) => {
 
 app.get('/tournament/:id', Utils.ensureLogin, async (req, res) => {
 
-    const tournaments =     
-
     res.render('tournament', {
         user: req.user
     });
@@ -498,6 +650,216 @@ app.get('/about', (req, res) => {
     res.render('about', {
         user: req.user || null
     });
+});
+
+app.get('/finances', Utils.ensureOfficer, (req, res) => {
+    res.render('finances', {
+        user: req.user || null
+    });
+});
+
+app.get('/tournamentPortal', Utils.ensureOfficer, (req, res) => {
+    res.render('tournamentPortal', {
+        user: req.user || null
+    });
+});
+
+app.get('/postLecture', Utils.ensureOfficer, (req, res) => {
+    res.render('postLecture', {
+        user: req.user || null
+    });
+});
+
+app.get('/roster', Utils.ensureOfficer, async (req, res) => {
+
+    const users = await User.find({})
+        .select('name profilePic username role')
+        .lean();
+    
+    const sortedUsers = users.sort((a, b) => {
+
+        const gradeA = a.role?.grade || 0;
+        const gradeB = b.role?.grade || 0;
+        
+        if (gradeA !== gradeB) {
+            return gradeB - gradeA;
+        }
+        
+        return (a.name || '').localeCompare(b.name || '');
+
+    });
+    
+    const usersByGrade = {
+        12: [],
+        11: [],
+        10: [],
+        9: [],
+        other: []
+    };
+    
+    sortedUsers.forEach(user => {
+        const grade = user.role?.grade;
+        if (grade >= 9 && grade <= 12) {
+            usersByGrade[grade].push(user);
+        } else {
+            usersByGrade.other.push(user);
+        }
+    });
+    
+    res.render('roster', {
+        user: req.user,
+        allUsers: sortedUsers,
+        usersByGrade: usersByGrade,
+        totalUsers: users.length
+    });
+
+});
+
+app.get('/judgeRegistry', Utils.ensureOfficer, (req, res) => {
+    res.render('judges', {
+        user: req.user || null
+    });
+});
+
+app.get('/demote/:username', Utils.ensureOfficer, async (req, res) => {
+
+    const user = await User.findOne({ username: req.params.username });
+    
+    let nextRole = 'novice';
+
+    if (user) {
+        if (user.role.type == 'novice' || user.role.type == 'JV') {
+            nextRole = 'novice';
+        } else if (user.role.type == 'varsity') {
+            nextRole = 'JV';
+        }
+    }
+
+    res.render('demoteUser', {
+        user: req.user || null,
+        newRole: nextRole,
+        currentRole: user.role.type,
+        username: user.username
+    });
+
+});
+
+app.post('/demote', Utils.ensureOfficer, async (req, res) => {
+
+    const user = await User.findOne({ username: req.body.username });
+    
+    let nextRole = 'novice';
+
+    
+    if (user) {
+     
+        let roleTemp = user.role;
+        
+        if (user.role.type == 'novice' || user.role.type == 'JV') {
+            nextRole = 'novice';
+        } else if (user.role.type == 'varsity') {
+            nextRole = 'JV';
+        }
+
+        roleTemp.type = nextRole;
+        
+        await User.findOneAndUpdate({ username: req.body.username }, {
+            role: roleTemp
+        });
+
+        return res.redirect('/roster');
+
+    } else {
+
+        console.log("Error finding user for demotion");
+
+        return res.redirect('/roster');
+    
+    }
+    
+});
+
+app.get('/promote/:username', Utils.ensureOfficer, async (req, res) => {
+
+    const user = await User.findOne({ username: req.params.username });
+    
+    let nextRole = 'JV';
+
+    if (user) {
+        if (user.role.type == 'novice') {
+            nextRole = 'JV';
+        } else if (user.role.type == 'JV') {
+            nextRole = 'varsity';
+        }
+    }
+
+    res.render('promoteUser', {
+        user: req.user || null,
+        newRole: nextRole,
+        currentRole: user.role.type,
+        username: user.username
+    });
+
+});
+
+app.post('/promote', Utils.ensureOfficer, async (req, res) => {
+
+    const user = await User.findOne({ username: req.body.username });
+    
+    let nextRole = 'JV';
+    
+    if (user) {
+     
+        let roleTemp = user.role;
+        
+        if (user.role.type == 'novice') {
+            nextRole = 'JV';
+        } else if (user.role.type == 'JV') {
+            nextRole = 'varsity';
+        }
+
+        roleTemp.type = nextRole;
+        
+        await User.findOneAndUpdate({ username: req.body.username }, {
+            role: roleTemp
+        });
+
+        return res.redirect('/roster');
+
+    } else {
+
+        console.log("Error finding user for promotion");
+
+        return res.redirect('/roster');
+    
+    }
+    
+});
+
+app.post('/kick', Utils.ensureOfficer, async (req, res) => {
+    
+    await User.findOneAndDelete({ username: req.body.username });
+
+    return res.redirect('/roster');
+
+});
+
+app.get('/kick/:id', Utils.ensureOfficer, async (req, res) => {
+
+    const user = await User.findOne({ username: req.params.id });
+    
+    if (user) {
+        
+        res.render('kickUser', {
+            user: req.user || null,
+            username: user.username
+        });
+    
+    } else {
+        console.log("Couldn't find user to kick");
+        return res.redirect('/');
+    }
+
 });
 
 app.get("/getUserInfo", async (req, res) => {

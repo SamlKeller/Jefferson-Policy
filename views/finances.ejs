@@ -6,14 +6,22 @@
     <title>TJ Policy Debate</title>
     <link rel="stylesheet" href="/universal.css">
     <link rel="stylesheet" href="/basic.css">
+    <link rel="stylesheet" href="/finance.css">
     <link rel="icon" type="image/x-icon" href="/logo.svg">
 </head>
 <body>
     <%- include('partials/header') %>
     
     <main class="page-container">
-        <h1 id="pageTitle">Page title</h1>
-        <p id="pageContent">This is some page content</p>
+        <h1 id="pageTitle">Finances</h1>
+        <div id="twoOptions">
+            <a href="/feeSummary">
+                <p class="financeOptionTitle">Fee portal</p>
+            </a>
+            <a href="https://docs.google.com/spreadsheets/d/1fgWorK2GJPAx_w2wAeM8OcQXieUg05m0-TDAowTvndE/edit?gid=0#gid=0">
+                <p class="financeOptionTitle">Finance records</p>
+            </a>
+        </div>
     </main>
     
     <%- include('partials/footer') %>
