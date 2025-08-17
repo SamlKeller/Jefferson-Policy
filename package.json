@@ -1,0 +1,42 @@
+{
+    "type": "module",
+    "name": "policy-debate-website",
+    "version": "1.0.0",
+    "main": "server.js",
+    "scripts": {
+        "test": "start",
+        "start": "nodemon server.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/samlkeller/jefferson-policy.git"
+    },
+    "author": "Sam Stankiewicz",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/samlkeller/jefferson-policy/issues"
+    },
+    "homepage": "https://github.com/samlkeller/jefferson-policy#readme",
+    "description": "",
+    "dependencies": {
+        "@aws-sdk/client-s3": "^3.864.0",
+        "@aws-sdk/client-sesv2": "^3.864.0",
+        "axios": "^1.11.0",
+        "bcrypt": "^6.0.0",
+        "dotenv": "^17.2.1",
+        "ejs": "^3.1.10",
+        "express": "^5.1.0",
+        "express-flash": "^0.0.2",
+        "express-session": "^1.18.2",
+        "lodash": "^4.17.21",
+        "mongoose": "^8.17.1",
+        "multer": "^2.0.2",
+        "multer-s3": "^3.0.1",
+        "nodemailer": "^7.0.5",
+        "nodemon": "^3.1.10",
+        "passport": "^0.7.0",
+        "passport-local": "^1.0.0",
+        "passport-oauth2": "^1.8.0",
+        "path": "^0.12.7"
+    }
+}

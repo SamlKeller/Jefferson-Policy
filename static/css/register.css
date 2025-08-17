@@ -1,0 +1,34 @@
+#loginWithIon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: black;
+    text-decoration: none;
+    margin: 12px auto auto 0px;    
+    width: 275px;
+    height: 50px;
+    border-radius: 8px;
+    border: 1px solid rgb(206, 206, 206);
+    background-color: rgb(238, 238, 238);
+    font-family: 'Raleway', sans-serif;
+}
+
+#loginWithIon:hover {
+    cursor: pointer;
+}
+
+#ionLogo {
+    height: 25px;
+    width: 25px;
+    margin: auto 0px auto 18px;
+}
+
+#rightText {
+    position: relative;
+    display: inline-block;
+    margin: auto auto auto 12px;
+    text-align: left;
+    position: relative;
+    bottom: 1px;
+    font-size: 14px;
+}

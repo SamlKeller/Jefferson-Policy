@@ -1,0 +1,68 @@
+.page-container {
+    margin-top: 6% !important;
+}
+
+#pageTitle {
+    margin-top: 0px !important;
+}
+
+#officerContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    row-gap: 48px;
+    column-gap: 24px;
+    margin-bottom: 120px;
+}
+
+.socialLinks {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 12px;
+    width: 100%;
+    margin: 0px auto 0px 0px;
+}
+
+.socialLink {
+    margin: auto 0px auto 0px;
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    background-color: rgb(240, 240, 240);
+    border: 1px solid rgb(172, 172, 172);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.socialLink img {
+    height: 15px;
+    width: 15px;
+    filter: grayscale(100%) brightness(20%);
+    margin: auto;
+}
+
+.officer {
+    width: 250px;
+    height: 425px;
+}
+
+.officerImage {
+    height: 293px;
+    width: 250px;
+    margin: 0px auto 0px auto;
+    object-fit: cover ;
+}
+
+.officerName {
+    font-weight: 600;
+    margin: 0px auto 0px 0px;
+    font-size: 24px;
+}
+
+.officerTitle {
+    margin: 2px auto 12px 0px;
+    color: rgb(124, 124, 124);
+}

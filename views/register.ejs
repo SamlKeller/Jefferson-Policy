@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TJ Policy Debate: Register</title>
+    <link rel="stylesheet" href="/universal.css">
+    <link rel="stylesheet" href="/basic.css">
+    <link rel="stylesheet" href="/register.css">
+    <link rel="icon" type="image/x-icon" href="/logo.svg">
+</head>
+<body>
+    <%- include('partials/header') %>
+    
+    <main class="page-container">
+        <h1 id="pageTitle">Sign up</h1>
+        <p id="pageContent">This portal is only for current student members.</p>
+        <a href="/auth/ion" aria-label="Register with Ion" id="loginWithIon">
+            <img src="/ionLogo.png" alt="Ion" id="ionLogo">
+            <span id="rightText">Sign up with Ion</span>
+        </a>
+    </main>
+    
+    <%- include('partials/footer') %>
+
+    <script src="basic.js"></script>
+</body>
+</html>

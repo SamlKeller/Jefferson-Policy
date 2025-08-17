@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TJ Policy Debate</title>
+    <link rel="stylesheet" href="/universal.css">
+    <link rel="stylesheet" href="/basic.css">
+    <link rel="icon" type="image/x-icon" href="/logo.svg">
+</head>
+<body>
+    <%- include('partials/header') %>
+    
+    <main class="page-container">
+        <h1 id="pageTitle">About TJ Policy</h1>
+        <p id="pageContent">Policy Debate has a long history at TJHSST. At times, we've been one of the best teams in the nation. Today, we're over thirty debaters strong and continuing our strong record of success. At TJ, we're raising a new generation of public speakers and debaters prepared for success in the real world.<br><br>We compete on the local, state, and national circuits and meet every Wednesday B and Friday A at Thomas Jefferson. Our debaters have gone on to debate at top colleges around the nation and maintain a strong record on varsity teams at the collegiate level. Some of our debaters have won TOC bids, won at VHSL's, and placed in NCFL.</p>
+    </main>
+    
+    <%- include('partials/footer') %>
+
+    <script src="/basic.js"></script>
+    <script>
+
+        document.addEventListener('DOMContentLoaded', function() {
+            <% if (user) { %>
+                console.log("User exists");
+                console.log({
+                    name: "<%= user.name %>",
+                    username: "<%= user.username %>",
+                    profilePic: "<%= user.profilePic %>"
+                });
+
+                document.getElementsByClassName('defaultAuth')[0].style.setProperty('display', 'none', 'important');
+                document.getElementsByClassName('topProfileLink')[0].style.setProperty('display', 'flex', 'important');
+                document.getElementsByClassName('topName')[0].innerHTML = '<%= user.name.split(' ')[0] %>';
+                document.getElementsByClassName('userImageInsert')[0].src = '<%= user.profilePic %>';
+
+                console.log(document.querySelector('header').classList);
+
+                console.log(document.querySelectorAll('header'));
+
+                if (document.querySelector('header').classList.contains('header-light')) {
+
+                    console.log("Includes");
+                    document.getElementsByClassName('topName')[0].style.setProperty('color', 'rgb(51, 51, 51)', 'important');
+
+                } else {
+                    console.log("Doesn't");
+                }
+
+            <% } else { %>
+                console.log("User doesn't exist");
+            <% } %>
+
+        });
+
+    </script>
+</body>
+</html>

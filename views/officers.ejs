@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TJ Policy Debate</title>
+    <link rel="stylesheet" href="/universal.css">
+    <link rel="stylesheet" href="/basic.css">
+    <link rel="stylesheet" href="/officers.css">
+    <link rel="icon" type="image/x-icon" href="/logo.svg">
+</head>
+<body>
+    <%- include('partials/header') %>
+    
+    <main class="page-container">
+        <h1 id="pageTitle">Officers</h1>
+        <div id="officerContainer">
+            <div class="officer">
+                <img src="/sam.jpg" alt="Officer" class="officerImage">
+                <p class="officerName">Sam Stankiewicz</p>
+                <p class="officerTitle">Captain</p>
+                <div class="socialLinks">
+                    <a href="mailto:sam@tjpolicy.com" class="socialLink">
+                        <img src="/email.svg" alt="email">
+                    </a>
+                    <a href="https://www.linkedin.com/in/samuel-stankiewicz-1a5369226/" class="socialLink">
+                        <img src="/linkedin.svg" alt="LinkedIn">
+                    </a>
+                </div>
+            </div>
+            <div class="officer">
+                <img src="/officerImage.svg" alt="Officer" class="officerImage">
+                <p class="officerName">Aryaa Sharma</p>
+                <p class="officerTitle">Captain</p>
+                <div class="socialLinks">
+                    <a href="mailto:aryaa@tjpolicy.com" class="socialLink">
+                        <img src="/email.svg" alt="email">
+                    </a>
+                    <a href="https://www.linkedin.com/in/aryaa-sharma-975359251/" class="socialLink">
+                        <img src="/linkedin.svg" alt="LinkedIn">
+                    </a>
+                </div>
+            </div>
+            <div class="officer">
+                <img src="/officerImage.svg" alt="Officer" class="officerImage">
+                <p class="officerName">Aiyana Bage</p>
+                <p class="officerTitle">Teaching Coordinator</p>
+                <div class="socialLinks">
+                    <a href="mailto:aiyana@tjpolicy.com" class="socialLink">
+                        <img src="/email.svg" alt="email">
+                    </a>
+                    <a href="https://www.linkedin.com/in/aiyana-bage/" class="socialLink">
+                        <img src="/linkedin.svg" alt="LinkedIn">
+                    </a>
+                </div>
+            </div>
+            <div class="officer">
+                <img src="/officerImage.svg" alt="Officer" class="officerImage">
+                <p class="officerName">Ishita Sengar</p>
+                <p class="officerTitle">Teaching Coordinator</p>
+                <div class="socialLinks">
+                    <a href="mailto:ishita@tjpolicy.com" class="socialLink">
+                        <img src="/email.svg" alt="email">
+                    </a>
+                    <a href="https://www.linkedin.com/in/ishita-sengar-4a18b92b9/" class="socialLink">
+                        <img src="/linkedin.svg" alt="LinkedIn">
+                    </a>
+                </div>
+            </div>
+            <div class="officer">
+                <img src="/officerImage.svg" alt="Officer" class="officerImage">
+                <p class="officerName">Kate Russell</p>
+                <p class="officerTitle">Treasurer</p>
+                <div class="socialLinks">
+                    <a href="mailto:kate@tjpolicy.com" class="socialLink">
+                        <img src="/email.svg" alt="email">
+                    </a>
+                </div>
+            </div>
+            <div class="officer">
+                <img src="/officerImage.svg" alt="Officer" class="officerImage">
+                <p class="officerName">Halin Kim</p>
+                <p class="officerTitle">Webmaster/Publicist</p>
+                <div class="socialLinks">
+                    <a href="mailto:halin@tjpolicy.com" class="socialLink">
+                        <img src="/email.svg" alt="email">
+                    </a>
+                </div>
+            </div>
+            <div class="officer">
+                <img src="/officerImage.svg" alt="Officer" class="officerImage">
+                <p class="officerName">Ruby Diao</p>
+                <p class="officerTitle">Webmaster/Publicist</p>
+                <div class="socialLinks">
+                    <a href="mailto:ruby@tjpolicy.com" class="socialLink">
+                        <img src="/email.svg" alt="email">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <%- include('partials/footer') %>
+
+    <script src="/basic.js"></script>
+    <script>
+
+        document.addEventListener('DOMContentLoaded', function() {
+            <% if (user) { %>
+                console.log("User exists");
+                console.log({
+                    name: "<%= user.name %>",
+                    username: "<%= user.username %>",
+                    profilePic: "<%= user.profilePic %>"
+                });
+
+                document.getElementsByClassName('defaultAuth')[0].style.setProperty('display', 'none', 'important');
+                document.getElementsByClassName('topProfileLink')[0].style.setProperty('display', 'flex', 'important');
+                document.getElementsByClassName('topName')[0].innerHTML = '<%= user.name.split(' ')[0] %>';
+                document.getElementsByClassName('userImageInsert')[0].src = '<%= user.profilePic %>';
+
+                console.log(document.querySelector('header').classList);
+
+                console.log(document.querySelectorAll('header'));
+
+                if (document.querySelector('header').classList.contains('header-light')) {
+
+                    console.log("Includes");
+                    document.getElementsByClassName('topName')[0].style.setProperty('color', 'rgb(51, 51, 51)', 'important');
+
+                } else {
+                    console.log("Doesn't");
+                }
+
+            <% } else { %>
+                console.log("User doesn't exist");
+            <% } %>
+
+        });
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,230 @@
+@media (max-width: 480px) {
+    .hero {
+        padding: 8rem 1rem 4rem;
+    }
+
+    .hero h1 {
+        font-size: 2rem;
+    }
+
+    .section {
+        padding: 3rem 1rem;
+    }
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.hero {
+    background-image: url('/mainBackground.jpg');
+    background-size: cover;
+    background-position: center;
+    color: white;
+    padding: 10rem 2rem 6rem;
+    text-align: center;
+    min-height: 100vh;
+    position: relative;
+}
+
+.hero h1 {
+    font-size: 4rem;
+    font-weight: bold;
+    font-family: 'Raleway', sans-serif;
+    margin: 0px;
+}
+
+#content {
+    display: block;
+    background-color: rgba(0, 0, 0, 0.5);
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#centralCard {
+    background-color: rgb(255, 255, 255);
+    outline: 1px solid rgb(202, 202, 202);
+    border-radius: 8px;
+    box-shadow: 0px 0px 29px -9px rgba(0,0,0,0.75);
+    -webkit-box-shadow: 0px 0px 29px -9px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 0px 29px -9px rgba(0,0,0,0.75);
+    padding-top: 48px;
+    color: black !important;
+}
+
+.hero-description {
+    max-width: 700px;
+    margin: 12px auto 32px auto;
+    padding: 0px 12px 0px 12px;
+    font-size: 1.2rem;
+    line-height: 1.8;
+    font-family: 'Raleway', sans-serif;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    margin-bottom: 3rem;
+    margin-top: 4px;
+}
+
+.btn-primary, .btn-secondary {
+    border: none;
+    line-height: 45px;
+    width: 150px;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    text-decoration: none;
+    display: block;
+    text-align: center;
+    transition-duration: 0.2s;
+    padding-bottom: 4px;
+}
+
+.btn-primary {
+    background: #274690;
+    color: white;
+}
+
+.btn-primary2 {
+    border: none;
+    line-height: 45px;
+    width: 200px;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    text-decoration: none;
+    display: block;
+    text-align: center;
+    transition-duration: 0.2s;
+    padding-bottom: 4px;
+}
+
+.btn-primary2 {
+    background: #274690;
+    color: white;
+}
+
+.btn-secondary {
+    background: none;
+    color: #ffffff;
+    outline: 1px solid white;
+}
+
+.btn-secondary:hover {
+    background-color: rgb(255, 255, 255, 0.7);
+    color: black;
+}
+
+.hero-quote {
+    font-style: italic;
+    opacity: 0.9;
+    max-width: 700px;
+}
+
+.section {
+    padding: 5rem 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.section-light {
+    background: white;
+}
+
+.section-gray {
+    background: #f8f9fa;
+}
+
+.section h2 {
+    font-size: 2.5rem;
+    text-align: left;
+    margin: 0px auto 0px 0px;
+    color: #2c3e50;
+}
+
+.section-content {
+    text-align: left;
+    margin: 24px auto auto 0px;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #666;
+}
+
+.section-content2 {
+    text-align: left;
+    margin: 12px auto auto 0px;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #666;
+}
+
+.section-buttons {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+}
+
+.section-buttons2 {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 28px;
+    justify-content: flex-start;
+}
+
+.features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 3rem;
+    margin-top: 3rem;
+}
+
+.feature-card {
+    display: block;
+    text-decoration: none;
+    text-align: center;
+    padding: 2rem;
+    border-radius: 8px;
+    transition-duration: 0.2s;
+    outline: 0px solid rgb(187, 187, 187);
+}
+
+.feature-card:hover {
+    cursor: pointer;
+    background-color: white;
+    outline: 1px solid rgb(219, 219, 219);
+    box-shadow: 0px 0px 29px -9px rgba(0,0,0,0.25);
+    -webkit-box-shadow: 0px 0px 29px -9px rgba(0,0,0,0.25);
+    -moz-box-shadow: 0px 0px 29px -9px rgba(0,0,0,0.25);
+}
+
+.feature-card h3 {
+    color: #000000;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.feature-card p {
+    color: #666;
+    line-height: 1.6;
+}
+
+.bottomImage {
+    height: 50px;
+    width: 50%;
+    margin: auto;
+    position: relative;
+    color: black;
+    filter: brightness(0%);
+}

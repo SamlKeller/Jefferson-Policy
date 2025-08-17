@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TJ Policy Debate</title>
+    <link rel="stylesheet" href="/universal.css">
+    <link rel="stylesheet" href="/basic.css">
+    <link rel="stylesheet" href="/home.css">
+    <link rel="icon" type="image/x-icon" href="/logo.svg">
+</head>
+<body>
+    <%- include('partials/header') %>
+    
+    <main class="page-container">
+        
+        <h1 id="pageTitle">Welcome, <%-user.name.split(' ')[0]%>!</h1>
+        
+        <div id="breaker"></div>
+
+        <div id="contentWrapper">
+
+            <div id="leftContent">
+    
+                <div id="feeBlock">
+                    <p id="outstandingFees">$15.00</p>
+                    <p id="outstandingFeeTitle">Outstanding fees</p>
+                </div>
+                
+                <div id="recentLectures">
+                    <p id="recentLecturesTitle">Recent lectures</p>
+                    <div id="lectureInsert">
+                        <a href="#" class="recentLecture">
+                            <img src="/slides.png" alt="Google slides icon" class="slideImage">
+                            <div class="recentLectureRightContent">
+                                <p class="recentLectureLabel">Topicality</p>
+                                <p class="recentLectureDate">4/8/25</p>
+                            </div>
+                        </a>
+                        <a class="recentLecture">
+                            <img src="/slides.png" alt="Google slides icon" class="slideImage">
+                            <div class="recentLectureRightContent">
+                                <p class="recentLectureLabel">Topicality</p>
+                                <p class="recentLectureDate">4/8/25</p>
+                            </div>
+                        </a>
+                        <a class="recentLecture">
+                            <img src="/slides.png" alt="Google slides icon" class="slideImage">
+                            <div class="recentLectureRightContent">
+                                <p class="recentLectureLabel">Topicality</p>
+                                <p class="recentLectureDate">4/8/25</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+    
+            <div id="rightContent">
+    
+                <div id="tournamentSignup">
+                    
+                    <p id="tournamentSignupTitle">Tournament registration</p>
+    
+                    <div id="tournamentInsert">
+    
+                        <div class="tournament">
+    
+                            <p class="tournamentName">WACFL #5</p>
+                            <button class="signUpForTournament">Register</button>
+    
+                        </div>
+    
+                        <div class="tournament">
+    
+                            <p class="tournamentName">Metrofinals</p>
+                            <button class="signUpForTournament">Register</button>
+    
+                        </div>
+    
+                        <div class="tournament">
+    
+                            <p class="tournamentName">VHSL</p>
+                            <button class="signUpForTournament">Register</button>
+    
+                        </div>
+    
+                    </div>
+    
+                </div>
+    
+                <p id="bottomLinksTitle">Other links</p>
+
+                <div id="bottomLinks">
+
+                    <div class="rightContentBlock">
+                        <p class="rightContentTitle">Finances</p>
+                        <button class="visitContent">Go</button>
+                    </div>
+    
+                    <div class="rightContentBlock">
+                        <p class="rightContentTitle">Tournament portal</p>
+                        <button class="visitContent">Go</button>
+                    </div>
+
+                    <div class="rightContentBlock">
+                        <p class="rightContentTitle">Post lecture</p>
+                        <button class="visitContent">Go</button>
+                    </div>
+
+                    <div class="rightContentBlock">
+                        <p class="rightContentTitle">Dropbox</p>
+                        <button class="visitContent">Go</button>
+                    </div>
+        
+                    <div class="rightContentBlock">
+                        <p class="rightContentTitle">Constitution</p>
+                        <button class="visitContent">Go</button>
+                    </div>
+        
+                    <div class="rightContentBlock">
+                        <p class="rightContentTitle">Team roster</p>
+                        <button class="visitContent">Go</button>
+                    </div>
+        
+                    <div class="rightContentBlock">
+                        <p class="rightContentTitle">Judge registry</p>
+                        <button class="visitContent">Go</button>
+                    </div>
+    
+                </div>
+    
+    
+            </div>
+
+        </div>
+
+    </main>
+    
+    <%- include('partials/footer') %>
+
+    <script src="/basic.js"></script>
+    <script>
+
+        document.addEventListener('DOMContentLoaded', function() {
+            <% if (user) { %>
+                console.log("User exists");
+                console.log({
+                    name: "<%= user.name %>",
+                    username: "<%= user.username %>",
+                    profilePic: "<%= user.profilePic %>"
+                });
+
+                document.getElementsByClassName('defaultAuth')[0].style.setProperty('display', 'none', 'important');
+                document.getElementsByClassName('topProfileLink')[0].style.setProperty('display', 'flex', 'important');
+                document.getElementsByClassName('topName')[0].innerHTML = '<%= user.name.split(' ')[0] %>';
+                document.getElementsByClassName('userImageInsert')[0].src = '<%= user.profilePic %>';
+
+                console.log(document.querySelector('header').classList);
+
+                console.log(document.querySelectorAll('header'));
+
+                if (document.querySelector('header').classList.contains('header-light')) {
+
+                    document.getElementsByClassName('topName')[0].style.setProperty('color', 'rgb(51, 51, 51)', 'important');
+
+                }
+
+                for (let x = 0; x < <%=user%>.tournaments.length; ) {
+
+                }
+
+            <% } else { %>
+                console.log("User doesn't exist");
+            <% } %>
+
+        });
+
+    </script>
+</body>
+</html>

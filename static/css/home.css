@@ -1,0 +1,193 @@
+.page-container {
+    margin-top: 72px !important;
+    width: 100%;
+}
+
+#contentWrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 24px;
+    width: 100%;
+}
+
+#breaker {
+    height: 1px;
+    width: 100%;
+    background-color: rgb(207, 207, 207);
+    margin-bottom: 36px;
+}
+
+#leftContent {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    margin: 0px auto auto 0px;
+}
+
+#rightContent {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    margin: 0px auto auto auto;
+    width: 100%;
+}
+
+#tournamentSignupTitle {
+    font-weight: 500;
+    font-size: 22px;
+    margin-top: 0px;
+}
+
+#tournamentInsert {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 12px;
+}
+
+.tournament {
+    background-color: white;
+    border: 1px solid rgb(201, 201, 201);
+    width: 100%;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 12px 24px 12px 24px;
+}
+
+.tournamentName {
+    margin: auto auto auto 0px;
+    font-weight: 600;
+}
+
+.signUpForTournament {
+    margin: auto 0px auto auto;
+    height: 100%;
+    border: none;
+    background-color: #274690;
+    color: white;
+    height: 45px;
+    border-radius: 8px;
+    width: 100px;
+}
+
+#feeBlock {
+    background-color: white;
+    border-radius: 8px;
+    border: 1px solid rgb(189, 189, 189);
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: 250px;
+    height: 250px;
+}
+
+#outstandingFees {
+    margin: auto auto 0px auto;
+    text-align: center;
+    font-size: 36px;
+    font-weight: 600;
+}
+
+#outstandingFeeTitle {
+    text-align: center;
+    margin: 4px auto auto auto;
+    color: rgb(102, 102, 102);
+}
+
+.slideImage {
+    height: 30px;
+    margin: auto 0px auto 12px;
+}
+
+#recentLecturesTitle {
+    margin: 24px auto 12px 0px;
+    font-weight: 500;
+}
+
+.recentLecture {
+    display: block;
+    color: black;
+    text-decoration: none;
+    width: 275px;
+    border-radius: 4px;
+    display: flex;
+    gap: 20px;
+    flex-direction: row;
+    justify-content: flex-start;
+    margin: 0px auto 0px 0px;
+}
+
+#lectureInsert {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    margin: 0px auto auto 0px;
+}
+
+.recentLectureRightContent {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: auto auto auto 0px;
+}
+
+.recentLectureLabel {
+    margin: auto auto 0px 0px;
+    font-weight: 600;
+}
+
+.recentLectureDate {
+    margin: 0px auto auto 0px;
+    color: rgb(185, 185, 185);
+}
+
+#bottomLinksTitle {
+    font-weight: 500;
+    font-size: 18px;
+    margin-top: 32px;
+}
+
+#bottomLinks {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 12px;
+}
+
+.rightContentBlock {
+    background-color: white;
+    border: 1px solid rgb(209, 209, 209);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 12px;
+}
+
+.visitContent:hover {
+    cursor: pointer;
+}
+
+.signUpForTournament:hover {
+    cursor: pointer;
+}
+
+.rightContentTitle {
+    margin: auto auto auto 0px;
+}
+
+.visitContent {
+    display: block;
+    background-color: #274690;
+    height: 100%;
+    margin: auto 0px auto auto;
+    color: white;
+    width: 75px;
+    height: 40px;
+    border: none;
+    outline: none;
+    border-radius: 8px;
+}
